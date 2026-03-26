@@ -7,7 +7,7 @@ import AdminPage from './pages/AdminPage';
 
 /**
  * 앱 루트 컴포넌트
- * - useStore 훅으로 슬롯/지원자 데이터를 관리하고 각 페이지에 주입
+ * - useStore 훅으로 Supabase 데이터를 관리하고 각 페이지에 주입
  * - page 상태로 사용자/관리자 페이지 전환
  */
 function App() {
@@ -22,9 +22,9 @@ function App() {
     setPage('schedule');
   };
 
-  /** 면접 신청 완료 → 슬롯에 지원자 등록 후 완료 페이지로 이동 */
-  const handleSubmit = ({ slotId, date, time }) => {
-    store.addApplicant(slotId, user);
+  /** 면접 신청 완료 → Supabase에 지원자 등록 후 완료 페이지로 이동 */
+  const handleSubmit = async ({ slotId, date, time }) => {
+    await store.addApplicant(slotId, user);
     setSchedule({ date, time });
     setPage('complete');
   };
@@ -32,6 +32,18 @@ function App() {
   /* 관리자 페이지는 별도 레이아웃 사용 */
   if (page === 'admin') {
     return <AdminPage store={store} onExit={() => setPage('login')} />;
+  }
+
+  /* Supabase 데이터 로딩 중 */
+  if (store.loading) {
+    return (
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        minHeight: '100vh', fontSize: '14px', color: '#888',
+      }}>
+        로딩 중...
+      </div>
+    );
   }
 
   return (

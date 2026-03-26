@@ -40,10 +40,10 @@ function ApplicantTable({ store }) {
     (a, b) => new Date(b.appliedAt) - new Date(a.appliedAt)
   );
 
-  /** 지원자 삭제 핸들러 */
+  /** 지원자 삭제 핸들러 (Supabase UUID id 기반 삭제) */
   const handleDelete = (applicant) => {
     if (confirm(`${applicant.name} (${applicant.phone}) 지원자를 삭제하시겠습니까?`)) {
-      store.removeApplicant(applicant.slotId, applicant.appliedAt);
+      store.removeApplicant(applicant.id);
     }
   };
 
