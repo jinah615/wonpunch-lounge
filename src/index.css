@@ -26,7 +26,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 16px;
 }
 
 select {
@@ -37,4 +37,13 @@ select {
 
 input:focus, select:focus {
   outline: none;
+}
+
+/* ─── 모바일 반응형 (430px 이하) ─── */
+@media (max-width: 430px) {
+  #root {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 16px;
+  }
 }

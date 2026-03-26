@@ -31,9 +31,9 @@ function CompletePage({ user, schedule, onRestart }) {
         marginBottom: '20px',
         lineHeight: 1.7,
       }}>
-        <p style={{ fontSize: '14px', fontWeight: 700, color: '#111111' }}>[신청정보]</p>
-        <p style={{ fontSize: '14px', fontWeight: 700, color: '#111111' }}>{schedule.date}</p>
-        <p style={{ fontSize: '14px', fontWeight: 700, color: '#111111' }}>{schedule.time}</p>
+        <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', fontWeight: 700, color: '#111111' }}>[신청정보]</p>
+        <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', fontWeight: 700, color: '#111111' }}>{schedule.date}</p>
+        <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', fontWeight: 700, color: '#111111' }}>{schedule.time}</p>
       </div>
 
       {/* ── 완료 안내 문구 1 ── */}

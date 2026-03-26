@@ -6,12 +6,12 @@ import { timeToNumber } from '../utils/dateUtils';
 /* ─── 드롭다운 셀렉트 기본 스타일 ─── */
 const selectStyle = {
   width: '100%',
-  height: '42px',
+  height: '44px',
   border: '1px solid #d1d5db',
   borderRadius: '4px',
-  paddingLeft: '12px',
-  paddingRight: '36px',
-  fontSize: '14px',
+  paddingLeft: '10px',
+  paddingRight: '32px',
+  fontSize: 'clamp(12px, 3vw, 14px)',
   color: '#111111',
   background: '#ffffff',
   cursor: 'pointer',
@@ -31,14 +31,14 @@ const linkStyle = {
  */
 function SelectRow({ label, value, onChange, children }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+    <div>
       <span style={{
-        width: '35px', flexShrink: 0, fontSize: '14px',
-        color: '#111111', fontWeight: 500, textAlign: 'right',
+        display: 'block', fontSize: '14px',
+        color: '#111111', fontWeight: 500, marginBottom: '6px',
       }}>
         {label}
       </span>
-      <div style={{ position: 'relative', flex: 1 }}>
+      <div style={{ position: 'relative' }}>
         <select value={value} onChange={(e) => onChange(e.target.value)} style={selectStyle}>
           {children}
         </select>
@@ -186,7 +186,7 @@ function SchedulePage({ user, store, onSubmit, onBack }) {
           <button
             onClick={handleSubmit}
             style={{
-              display: 'block', width: '100%', height: '54px',
+              display: 'block', width: '100%', height: '50px',
               background: '#111111', color: '#ffffff', border: 'none', borderRadius: '4px',
               fontSize: '15px', fontWeight: 500, cursor: 'pointer',
               letterSpacing: '0.02em', marginBottom: '10px',

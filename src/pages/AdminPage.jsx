@@ -31,15 +31,15 @@ function AdminPage({ store, onExit }) {
         background: '#fff',
         border: '1px solid #ddd',
         borderRadius: '10px',
-        width: '860px',
-        maxWidth: '100%',
+        width: '100%',
+        maxWidth: '860px',
         boxShadow: '0 1px 4px rgba(0,0,0,0.07)',
         overflow: 'hidden',
       }}>
         {/* ── 헤더 영역 (어두운 배경) ── */}
         <div style={{
           background: '#111',
-          padding: '20px 28px',
+          padding: 'clamp(12px, 3vw, 20px) clamp(16px, 4vw, 28px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -78,7 +78,7 @@ function AdminPage({ store, onExit }) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               style={{
-                padding: '12px 24px',
+                padding: 'clamp(8px, 2vw, 12px) clamp(12px, 3vw, 24px)',
                 fontSize: '13px',
                 fontWeight: activeTab === tab.key ? 600 : 400,
                 color: activeTab === tab.key ? '#111' : '#888',
@@ -95,7 +95,7 @@ function AdminPage({ store, onExit }) {
         </div>
 
         {/* ── 탭 컨텐츠 ── */}
-        <div style={{ padding: '24px 28px' }}>
+        <div style={{ padding: 'clamp(16px, 3vw, 24px) clamp(16px, 4vw, 28px)' }}>
           {activeTab === 'slots' && <SlotManager store={store} />}
           {activeTab === 'applicants' && <ApplicantTable store={store} />}
           {activeTab === 'calendar' && <CalendarView store={store} />}
