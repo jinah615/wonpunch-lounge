@@ -29,6 +29,11 @@ body {
   padding: 16px;
 }
 
+/* iOS Safari에서 input 클릭 시 자동 확대 방지: font-size 16px 이상 필수 */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
