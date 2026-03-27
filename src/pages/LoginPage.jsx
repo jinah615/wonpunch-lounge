@@ -26,6 +26,21 @@ function LoginPage({ onLogin, store, onAdmin }) {
   const [phone2, setPhone2] = useState('');
   const [phone3, setPhone3] = useState('');
   const [showDupPopup, setShowDupPopup] = useState(false);
+  const [showAdminPopup, setShowAdminPopup] = useState(false);
+  const [adminPw, setAdminPw] = useState('');
+  const [adminPwError, setAdminPwError] = useState(false);
+
+  /** 관리자 비밀번호 확인 */
+  const handleAdminLogin = () => {
+    if (adminPw === import.meta.env.VITE_ADMIN_PASSWORD) {
+      setShowAdminPopup(false);
+      setAdminPw('');
+      setAdminPwError(false);
+      onAdmin();
+    } else {
+      setAdminPwError(true);
+    }
+  };
 
   const onlyNumbers = (setter, maxLen) => (e) => {
     const val = e.target.value.replace(/\D/g, '');
@@ -91,7 +106,7 @@ function LoginPage({ onLogin, store, onAdmin }) {
 
       {/* ── 관리자(왼쪽) + 문의하기(오른쪽) ── */}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <button onClick={onAdmin} style={linkStyle}>관리자</button>
+        <button onClick={() => { setShowAdminPopup(true); setAdminPw(''); setAdminPwError(false); }} style={linkStyle}>관리자</button>
         <a href="https://open.kakao.com/o/seuI1oni" target="_blank" rel="noopener noreferrer" style={linkStyle}>문의하기</a>
       </div>
 
@@ -105,6 +120,52 @@ function LoginPage({ onLogin, store, onAdmin }) {
             <button onClick={() => setShowDupPopup(false)} style={{ ...btnStyle, height: '40px', fontSize: '13px', marginTop: '16px' }}>
               확인
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── 관리자 비밀번호 팝업 ── */}
+      {showAdminPopup && (
+        <div style={overlayStyle} onClick={() => setShowAdminPopup(false)}>
+          <div style={popupStyle} onClick={(e) => e.stopPropagation()}>
+            <p style={{ fontSize: '14px', color: '#111', fontWeight: 600, textAlign: 'center', marginBottom: '16px' }}>
+              관리자 비밀번호를 입력해 주세요.
+            </p>
+            <input
+              type="password"
+              value={adminPw}
+              onChange={(e) => { setAdminPw(e.target.value); setAdminPwError(false); }}
+              onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
+              placeholder="비밀번호"
+              style={{
+                width: '100%', height: '44px', border: `1px solid ${adminPwError ? '#dc2626' : '#d1d5db'}`,
+                borderRadius: '4px', padding: '0 12px', fontSize: '14px', outline: 'none',
+                marginBottom: '4px',
+              }}
+              autoFocus
+            />
+            {adminPwError && (
+              <p style={{ fontSize: '12px', color: '#dc2626', marginBottom: '8px' }}>
+                비밀번호가 일치하지 않습니다.
+              </p>
+            )}
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <button
+                onClick={() => setShowAdminPopup(false)}
+                style={{
+                  flex: 1, height: '40px', background: '#fff', color: '#666',
+                  border: '1px solid #ddd', borderRadius: '4px', fontSize: '13px', cursor: 'pointer',
+                }}
+              >
+                취소
+              </button>
+              <button
+                onClick={handleAdminLogin}
+                style={{ ...btnStyle, flex: 1, height: '40px', fontSize: '13px', marginBottom: 0 }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}
