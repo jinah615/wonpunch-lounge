@@ -52,7 +52,7 @@ export function useStore() {
     fetchSlots();
   }, [fetchSlots]);
 
-  /** 새 슬롯 추가 */
+  /** 새 슬롯 추가 — 성공 시 true, 실패 시 false 반환 */
   const addSlot = async ({ isoDate, displayDate, time, maxCapacity }) => {
     const { error } = await supabase.from('slots').insert({
       iso_date: isoDate,
@@ -61,8 +61,12 @@ export function useStore() {
       max_capacity: Number(maxCapacity),
       closed: false,
     });
-    if (error) console.error('슬롯 추가 실패:', error);
+    if (error) {
+      console.error('슬롯 추가 실패:', error);
+      return false;
+    }
     await fetchSlots();
+    return true;
   };
 
   /** 슬롯 삭제 (CASCADE로 지원자도 함께 삭제됨) */

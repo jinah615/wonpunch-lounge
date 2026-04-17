@@ -39,8 +39,10 @@ function SlotManager({ store }) {
   const [time, setTime] = useState(TIME_OPTIONS[0]);
   const [capacity, setCapacity] = useState(1);
 
+  const [adding, setAdding] = useState(false);
+
   /** 슬롯 추가 핸들러 */
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!date) {
       alert('날짜를 선택해 주세요.');
       return;
@@ -52,7 +54,21 @@ function SlotManager({ store }) {
       alert('이미 동일한 날짜/시간 슬롯이 존재합니다.');
       return;
     }
-    store.addSlot({ isoDate: date, displayDate, time, maxCapacity: capacity });
+    setAdding(true);
+    try {
+      const ok = await store.addSlot({ isoDate: date, displayDate, time, maxCapacity: capacity });
+      if (ok) {
+        setDate('');
+        setCapacity(1);
+      } else {
+        alert('슬롯 추가에 실패했습니다. 다시 시도해 주세요.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('슬롯 추가 중 오류가 발생했습니다.');
+    } finally {
+      setAdding(false);
+    }
   };
 
   /** 슬롯을 날짜 → 시간 순으로 정렬 */
@@ -113,19 +129,20 @@ function SlotManager({ store }) {
         {/* 추가 버튼 */}
         <button
           onClick={handleAdd}
+          disabled={adding}
           style={{
             height: '38px',
             padding: '0 20px',
-            background: '#111',
+            background: adding ? '#999' : '#111',
             color: '#fff',
             border: 'none',
             borderRadius: '4px',
             fontSize: '13px',
             fontWeight: 500,
-            cursor: 'pointer',
+            cursor: adding ? 'not-allowed' : 'pointer',
           }}
         >
-          추가하기
+          {adding ? '추가 중...' : '추가하기'}
         </button>
       </div>
 
