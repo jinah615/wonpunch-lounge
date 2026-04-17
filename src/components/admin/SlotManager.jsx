@@ -58,7 +58,7 @@ function SlotManager({ store }) {
     try {
       const ok = await store.addSlot({ isoDate: date, displayDate, time, maxCapacity: capacity });
       if (ok) {
-        setDate('');
+        setTime(TIME_OPTIONS[0]);
         setCapacity(1);
       } else {
         alert('슬롯 추가에 실패했습니다. 다시 시도해 주세요.');
