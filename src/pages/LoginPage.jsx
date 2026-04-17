@@ -32,7 +32,7 @@ function LoginPage({ onLogin, store, onAdmin }) {
 
   /** 관리자 비밀번호 확인 */
   const handleAdminLogin = () => {
-    if (adminPw === import.meta.env.VITE_ADMIN_PASSWORD) {
+    if (adminPw === (import.meta.env.VITE_ADMIN_PASSWORD || 'wlsdk615!')) {
       setShowAdminPopup(false);
       setAdminPw('');
       setAdminPwError(false);
